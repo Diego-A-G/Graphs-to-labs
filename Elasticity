@@ -1,0 +1,35 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Datos de masa (kg) y período de oscilación (s)
+masas = np.array([0.8, 0.9, 1.0, 1.1, 1.2, 1.5])  # Masas en kilogramos
+tiempos_oscilacion = np.array([0.558, 0.586, 0.618, 0.670, 0.695, 0.753])  # Tiempos de oscilación en segundos
+
+# Calcular el período al cuadrado (T^2)
+periodo_cuadrado = tiempos_oscilacion ** 2
+
+# Realizar una regresión lineal para encontrar la pendiente (k)
+pendiente, _ = np.polyfit(masas, periodo_cuadrado, 1)
+
+# Calcular la constante de elasticidad (k) a partir de la pendiente
+k = 4 * (np.pi ** 2) / pendiente
+
+# Crear una gráfica de dispersión de los datos
+plt.scatter(masas, periodo_cuadrado, label='Datos')
+
+# Calcular los valores estimados de T^2 utilizando la pendiente encontrada
+periodo_cuadrado_estimado = pendiente * masas
+
+# Dibujar la línea de regresión
+plt.plot(masas, periodo_cuadrado_estimado, color='red', label='Regresión Lineal')
+
+# Etiquetas y leyenda
+plt.xlabel('Masa (kg)')
+plt.ylabel('Período al Cuadrado (s^2)')
+plt.legend()
+
+# Mostrar la gráfica
+plt.show()
+
+# Imprimir la constante de elasticidad (k)
+print(f'La constante de elasticidad del resorte (k) es: {k} N/m')
